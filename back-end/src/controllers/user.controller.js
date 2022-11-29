@@ -4,15 +4,16 @@ class UserController {
         this.res = res;
         this.next = next;
         this.service = service;
-    };
+    }
+
     async findAll() {
         try {
             const response = await this.service.findAll();
-            this.res.status(200).json(response)
+            this.res.status(200).json(response);
         } catch (error) {
             this.next(error);
-        };
-    };
+        }
+    }
 
     async create() {
         try {
@@ -20,8 +21,8 @@ class UserController {
             this.res.status(201).json(response);
         } catch (error) {
             this.next(error);
-        };
-    };
+        }
+    }
 
     async findById() {
         try {
@@ -30,20 +31,18 @@ class UserController {
             this.res.status(200).json(response);
         } catch (error) {
             this.next(error);
-        };
-    };
+        }
+    }
 
-    async deleteById(id) {
+    async deleteById() {
         try {
             const { id } = this.req.params;
             const response = await this.service.deleteById(id);
             this.res.status(204).json(response);
         } catch (error) {
             this.next(error);
-        };
-    };
-
-
+        }
+    }
 }
 
-module.exports = UserController
+module.exports = UserController;
