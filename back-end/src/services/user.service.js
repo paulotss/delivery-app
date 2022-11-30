@@ -1,3 +1,7 @@
+const validateUser = require('../utils/ValidateUser');
+
+const CustomError = require('../error/CustomError'); 
+  
 class UserService {
     constructor(model) {
         this.model = model;
@@ -14,6 +18,18 @@ class UserService {
         const { dataValues } = await this.model.create({ email, name, password, role });
         delete dataValues.password;
         return dataValues;
+    }
+
+    async findByLoginCredentials(password, email) {
+      const valUser = validateUser(password);
+
+      const result = await this.model.findOne({ where: {
+      password: valUser,
+      email,
+      } });
+      console.log(result);
+      if (!result) throw new CustomError('Not found', 404);
+      return result;
     }
 
     async findById(id) {

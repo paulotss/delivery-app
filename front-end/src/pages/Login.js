@@ -13,17 +13,33 @@ function Login() {
   const emailValidate = (emailInput) => (EMAIL_REGEX.test(emailInput));
   const passwordValidate = (passwordInput) => PASSWORD_REGEX.test(passwordInput);
 
+  const makeLogin = async () => {
+    const ok = 200;
+    const notFound = 404;
+    try {
+      const result = await axios.post('http://localhost:3001/user', { email, password });
+      console.log(result.status);
+      if (result.status === ok) {
+        setIsDataCorect(false);
+      }
+    } catch (error) {
+      if (error.response.status === notFound) {
+        setIsDataCorect(true);
+      }
+      console.log(error.response.status);
+    }
+    // console.log(result.status);
+    // console.log(isDataCorect);
+  };
+
   React.useEffect(() => {
     if (emailValidate(email) && passwordValidate(password)) return setIsDisabled(false);
     setIsDisabled(true);
   }, [email, password]);
 
-  React.useEffect(() => {
-    
-  }, [email, password]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    makeLogin();
   };
 
   return (
@@ -64,7 +80,10 @@ function Login() {
           Ainda não tenho Conta
         </button>
 
-        {isDataCorect && <p data-testid="common_login__element-invalid-email"> Usuário não Encontrado </p>}
+        {isDataCorect && (
+          <p data-testid="common_login__element-invalid-email">
+            Usuário não Encontrado
+          </p>)}
       </form>
     </div>
   );
