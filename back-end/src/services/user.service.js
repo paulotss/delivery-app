@@ -14,8 +14,11 @@ class UserService {
         return result;
     }
 
-    async create({ email, name, password, role }) {
-        const { dataValues } = await this.model.create({ email, name, password, role });
+    async create({ email, name, password, role = 'customer' }) {
+        const user = await this.model.findOne({ where: { email } });
+        const codePass = validateUser(password);
+        if (user) throw new CustomError('Usuário já existe', 409);
+        const { dataValues } = await this.model.create({ email, name, password: codePass, role });
         delete dataValues.password;
         return dataValues;
     }
@@ -27,7 +30,6 @@ class UserService {
       password: valUser,
       email,
       } });
-      console.log(result);
       if (!result) throw new CustomError('Not found', 404);
       return result;
     }

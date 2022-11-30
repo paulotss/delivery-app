@@ -1,7 +1,10 @@
 import * as React from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 function Login() {
+  const history = useHistory();
+
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [isDisabled, setIsDisabled] = React.useState(true);
@@ -28,8 +31,6 @@ function Login() {
       }
       console.log(error.response.status);
     }
-    // console.log(result.status);
-    // console.log(isDataCorect);
   };
 
   React.useEffect(() => {
@@ -76,14 +77,15 @@ function Login() {
         <button
           type="button"
           data-testid="common_login__button-register"
+          onClick={ () => history.push('/register') }
         >
           Ainda não tenho Conta
         </button>
 
-        {isDataCorect && (
+        {isDataCorect ? (
           <p data-testid="common_login__element-invalid-email">
             Usuário não Encontrado
-          </p>)}
+          </p>) : null}
       </form>
     </div>
   );

@@ -4,6 +4,7 @@ import Provider from './Context/Provider';
 import Login from './pages/Login';
 
 import './App.css';
+import Register from './pages/Register';
 
 export function ValidationRoute({ children }) {
   const history = useHistory();
@@ -22,9 +23,9 @@ function App() {
     <Provider>
       <Switch>
         <Route path="/login" component={ Login } />
-        <Route path="/" component={ RedirectLogin() } />
-        {/* <Route path="/register" component={ <Register /> } />
-        <Route path="/transactions" component={ <Transactions /> } />
+        <Route path="/register" component={ Register } />
+        <Route exact path="/" component={ () => RedirectLogin() } />
+        {/* <Route path="/transactions" component={ <Transactions /> } />
         <Route path="/" component={ <Home /> } /> */}
       </Switch>
     </Provider>
