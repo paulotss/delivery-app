@@ -1,11 +1,9 @@
 import * as React from 'react';
-import axios from 'axios';
 
-function Login() {
+function Register() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [isDisabled, setIsDisabled] = React.useState(true);
-  const [isDataCorect, setIsDataCorect] = React.useState(false);
 
   const EMAIL_REGEX = /^(\w|\.)+@[a-z]+\.com$/;
   const PASSWORD_REGEX = /.{6,}/;
@@ -16,10 +14,6 @@ function Login() {
   React.useEffect(() => {
     if (emailValidate(email) && passwordValidate(password)) return setIsDisabled(false);
     setIsDisabled(true);
-  }, [email, password]);
-
-  React.useEffect(() => {
-    
   }, [email, password]);
 
   const handleSubmit = (e) => {
@@ -63,11 +57,9 @@ function Login() {
         >
           Ainda não tenho Conta
         </button>
-
-        {isDataCorect && <p data-testid="common_login__element-invalid-email"> Usuário não Encontrado </p>}
       </form>
     </div>
   );
 }
 
-export default Login;
+export default Register;
