@@ -13,8 +13,6 @@ class ProductService {
     return result;
   }
 
-	
-
   async create({ name, price, urlImage }) {
     const { dataValues } = await this.model.create({ name, price, urlImage });
     return dataValues;
