@@ -5,6 +5,12 @@ import Navbar from '../components/Navbar';
 function Product() {
   const [products, setProducts] = useState([]);
   const [qtd, setQtd] = useState([]);
+  const [name, setName] = useState('');
+
+  const getDatafromLocalstorage = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    setName(user.name);
+  };
 
   const addAndRemoveQtd = (op, i) => {
     if (op === '+') {
@@ -43,10 +49,11 @@ function Product() {
 
   useEffect(() => {
     getProducts();
+    getDatafromLocalstorage();
   }, []);
   return (
     <>
-      <Navbar />
+      <Navbar name={ name } />
       {/* <CardProducts products={ products } /> */}
       <p>Products</p>
       <p>Products</p>
@@ -74,7 +81,7 @@ function Product() {
               </button>
               <input
                 data-testid={ `customer_products__input-card-quantity-${product.id}` }
-                number
+                type="number"
                 value={ qtd[i] }
               />
               <button

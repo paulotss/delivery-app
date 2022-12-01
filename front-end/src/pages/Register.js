@@ -14,12 +14,13 @@ function Register() {
   const createUser = async () => {
     const ok = 201;
     const alreadyExists = 409;
-    console.log('awd');
     try {
       const result = await axios.post('http://localhost:3001/user/register', { name, email, password });
-      console.log(result);
       if (result.status === ok) {
         setIsDataCorect(false);
+        delete result.id;
+
+        localStorage.setItem('user', JSON.stringify(result.data));
         history.push('/customer/products');
       }
     } catch (error) {

@@ -24,6 +24,10 @@ function Login() {
       console.log(result.status);
       if (result.status === ok) {
         setIsDataCorect(false);
+        delete result.id;
+
+        localStorage.setItem('user', JSON.stringify(result.data));
+
         history.push('/customer/products');
       }
     } catch (error) {

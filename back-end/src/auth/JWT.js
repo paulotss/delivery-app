@@ -1,13 +1,14 @@
 const JWT = require('jsonwebtoken');
 const fs = require('fs');
 const CustomError = require('../error/CustomError');
+const { join } = require('path');
 
 const jwtConfig = {
     expiresIn: '20h',
     algorithm: 'HS256',
 };
 
-const JWT_SECRET = fs.readFileSync('../jwt.evaluation.key');
+const JWT_SECRET = fs.readFileSync(join(__dirname,'../../jwt.evaluation.key'));
 
 const generateToken = (payload) => JWT.sign(payload, JWT_SECRET, jwtConfig);
 
