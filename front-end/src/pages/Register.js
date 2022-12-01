@@ -1,6 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { emailValidate, passwordValidate, nameValidate } from '../utils/validationLogin';
 
 function Register() {
   const history = useHistory();
@@ -31,14 +32,6 @@ function Register() {
       console.log(error.response.status);
     }
   };
-
-  const EMAIL_REGEX = /^[a-zA-z0-9._]+@[a-zA-z0-9._]+\.[a-zA-z0-9._ ]+(\.[a-zA-z0-9._ ]+)?$/;
-  const PASSWORD_REGEX = /.{6,}/;
-  const NAME_REGEX = /.{12,}/;
-
-  const emailValidate = (emailInput) => (EMAIL_REGEX.test(emailInput));
-  const passwordValidate = (passwordInput) => PASSWORD_REGEX.test(passwordInput);
-  const nameValidate = (nameInput) => NAME_REGEX.test(nameInput);
 
   React.useEffect(() => {
     if (nameValidate(name)

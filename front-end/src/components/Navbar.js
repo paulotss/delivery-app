@@ -1,4 +1,5 @@
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 function Navbar({ name }) {
   const history = useHistory();
@@ -40,5 +41,9 @@ function Navbar({ name }) {
     </nav>
   );
 }
+
+Navbar.propTypes = {
+  name: PropTypes.string.isRequired,
+};
 
 export default Navbar;

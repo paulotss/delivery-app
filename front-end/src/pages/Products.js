@@ -4,7 +4,6 @@ import Navbar from '../components/Navbar';
 
 function Product() {
   const [products, setProducts] = useState([]);
-  const [qtd, setQtd] = useState([]);
   const [name, setName] = useState('');
 
   const getDatafromLocalstorage = () => {
@@ -12,18 +11,24 @@ function Product() {
     setName(user.name);
   };
 
-  const addAndRemoveQtd = (op, i) => {
+  const addAndRemoveQtd = (op, id) => {
     if (op === '+') {
-      const aux = qtd;
-      console.log(aux);
-      aux[i] += 1;
-      setQtd(aux);
+      const newList = products.map((item) => {
+        if (item.id === id) {
+          item.count += 1;
+        }
+        return item;
+      });
+      setProducts(newList);
     }
     if (op === '-') {
-      const aux = qtd;
-      console.log(aux);
-      aux[i] = aux[i] > 0 ? aux[i] - 1 : 0;
-      setQtd(aux);
+      const newList = products.map((item) => {
+        if (item.id === id && item.count > 0) {
+          item.count -= 1;
+        }
+        return item;
+      });
+      setProducts(newList);
     }
   };
 
@@ -35,11 +40,11 @@ function Product() {
       const result = await axios.get('http://localhost:3001/products/');
       // console.log(result.data[1].url_image);
       if (result.status === ok) {
-        setProducts(result.data);
-        setQtd(result.data.map(() => 0));
+        const teste = result.data.map((item) => ({ ...item, count: 0 }));
+        setProducts(teste);
+        // setQtd(result.data.map(() => 0));
       }
     } catch (error) {
-      console.log(error);
       if (error.response.status === notFound) {
         setProducts(true);
       }
@@ -59,12 +64,12 @@ function Product() {
       <p>Products</p>
 
       {products.length !== 0 && (
-        products.map((product, i) => (
+        products.map((product) => (
           <div key={ product.id }>
             <p
               data-testid={ `customer_products__element-card-price-${product.id}` }
             >
-              {product.price}
+              {`R$ ${product.price.replaceAll('.', ',')}`}
             </p>
             <img
               data-testid={ `customer_products__img-card-bg-image-${product.id}` }
@@ -75,19 +80,19 @@ function Product() {
               <button
                 data-testid={ `customer_products__button-card-rm-item-${product.id}` }
                 type="button"
-                onClick={ () => addAndRemoveQtd('-', i) }
+                onClick={ () => addAndRemoveQtd('-', product.id) }
               >
                 -
               </button>
               <input
                 data-testid={ `customer_products__input-card-quantity-${product.id}` }
                 type="number"
-                value={ qtd[i] }
+                value={ product.count }
               />
               <button
                 data-testid={ `customer_products__button-card-add-item-${product.id}` }
                 type="button"
-                onClick={ () => addAndRemoveQtd('+', i) }
+                onClick={ () => addAndRemoveQtd('+', product.id) }
 
               >
                 +

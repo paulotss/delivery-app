@@ -1,6 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { emailValidate, passwordValidate } from '../utils/validationLogin';
 
 function Login() {
   const history = useHistory();
@@ -9,12 +10,6 @@ function Login() {
   const [password, setPassword] = React.useState('');
   const [isDisabled, setIsDisabled] = React.useState(true);
   const [isDataCorect, setIsDataCorect] = React.useState(false);
-
-  const EMAIL_REGEX = /^[a-zA-z0-9._]+@[a-zA-z0-9._]+\.[a-zA-z0-9._ ]+(\.[a-zA-z0-9._ ]+)?$/;
-  const PASSWORD_REGEX = /.{6,}/;
-
-  const emailValidate = (emailInput) => (EMAIL_REGEX.test(emailInput));
-  const passwordValidate = (passwordInput) => PASSWORD_REGEX.test(passwordInput);
 
   const makeLogin = async () => {
     const ok = 200;
