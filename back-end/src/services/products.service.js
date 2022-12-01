@@ -8,10 +8,12 @@ class ProductService {
     return result;
   }
 
-  async findOne(id) {
+  async findById(id) {
     const result = await this.model.findByPk(id);
     return result;
   }
+
+	
 
   async create({ name, price, urlImage }) {
     const { dataValues } = await this.model.create({ name, price, urlImage });
