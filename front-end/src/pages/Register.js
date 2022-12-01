@@ -1,7 +1,10 @@
 import * as React from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 function Register() {
+  const history = useHistory();
+
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -10,24 +13,25 @@ function Register() {
 
   const createUser = async () => {
     const ok = 201;
-    const notFound = 404;
+    const alreadyExists = 409;
     console.log('awd');
     try {
       const result = await axios.post('http://localhost:3001/user/register', { name, email, password });
       console.log(result);
       if (result.status === ok) {
         setIsDataCorect(false);
+        history.push('/customer/products');
       }
     } catch (error) {
       console.log(error);
-      if (error.response.status === notFound) {
+      if (error.response.status === alreadyExists) {
         setIsDataCorect(true);
       }
       console.log(error.response.status);
     }
   };
 
-  const EMAIL_REGEX = /^(\w|\.)+@[a-z]+\.com$/;
+  const EMAIL_REGEX = /^[a-zA-z0-9._]+@[a-zA-z0-9._]+\.[a-zA-z0-9._ ]+(\.[a-zA-z0-9._ ]+)?$/;
   const PASSWORD_REGEX = /.{6,}/;
   const NAME_REGEX = /.{12,}/;
 
@@ -88,10 +92,10 @@ function Register() {
           CADASTRAR
         </button>
 
-        {isDataCorect && (
+        {isDataCorect ? (
           <p data-testid="common_register__element-invalid_register">
-            Usuário não Cadastrado
-          </p>)}
+            Usuário Já Existe
+          </p>) : null}
       </form>
     </div>
   );

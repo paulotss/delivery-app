@@ -14,7 +14,7 @@ class UserService {
         return result;
     }
 
-    async create({ email, name, password, role = 'customer' }) {
+    async create({ email, name, password, role = null }) {
         const user = await this.model.findOne({ where: { email } });
         const codePass = validateUser(password);
         if (user) throw new CustomError('Usuário já existe', 409);

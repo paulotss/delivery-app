@@ -10,7 +10,7 @@ function Login() {
   const [isDisabled, setIsDisabled] = React.useState(true);
   const [isDataCorect, setIsDataCorect] = React.useState(false);
 
-  const EMAIL_REGEX = /^(\w|\.)+@[a-z]+\.com$/;
+  const EMAIL_REGEX = /^[a-zA-z0-9._]+@[a-zA-z0-9._]+\.[a-zA-z0-9._ ]+(\.[a-zA-z0-9._ ]+)?$/;
   const PASSWORD_REGEX = /.{6,}/;
 
   const emailValidate = (emailInput) => (EMAIL_REGEX.test(emailInput));
@@ -24,6 +24,7 @@ function Login() {
       console.log(result.status);
       if (result.status === ok) {
         setIsDataCorect(false);
+        history.push('/customer/products');
       }
     } catch (error) {
       if (error.response.status === notFound) {
