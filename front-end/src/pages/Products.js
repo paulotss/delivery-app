@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
+import TotalCart from '../components/TotalCartProduct';
 
 function Product() {
   const [products, setProducts] = useState([]);
+  const [productsCart, setProductsCart] = useState([]);
   const [name, setName] = useState('');
 
   const getDatafromLocalstorage = () => {
@@ -11,7 +13,7 @@ function Product() {
     setName(user.name);
   };
 
-  const addAndRemoveQtd = (op, id) => {
+  const addAndRemoveQtd = (e, op, id) => {
     if (op === '+') {
       const newList = products.map((item) => {
         if (item.id === id) {
@@ -20,6 +22,7 @@ function Product() {
         return item;
       });
       setProducts(newList);
+      setProductsCart(newList.filter((el) => el.count));
     }
     if (op === '-') {
       const newList = products.map((item) => {
@@ -29,6 +32,17 @@ function Product() {
         return item;
       });
       setProducts(newList);
+      setProductsCart(newList.filter((el) => el.count));
+    }
+    if (op === 'geral') {
+      const newList = products.map((item) => {
+        if (item.id === id) {
+          item.count = +e.target.value;
+        }
+        return item;
+      });
+      setProducts(newList);
+      setProductsCart(newList.filter((el) => el.count));
     }
   };
 
@@ -57,11 +71,11 @@ function Product() {
     getDatafromLocalstorage();
   }, []);
   return (
-    <>
+    <div>
       <Navbar name={ name } />
       {/* <CardProducts products={ products } /> */}
-      <p>Products</p>
-      <p>Products</p>
+
+      <TotalCart productsCart={ productsCart } />
 
       {products.length !== 0 && (
         products.map((product) => (
@@ -80,19 +94,20 @@ function Product() {
               <button
                 data-testid={ `customer_products__button-card-rm-item-${product.id}` }
                 type="button"
-                onClick={ () => addAndRemoveQtd('-', product.id) }
+                onClick={ (e) => addAndRemoveQtd(e, '-', product.id) }
               >
                 -
               </button>
               <input
                 data-testid={ `customer_products__input-card-quantity-${product.id}` }
-                type="number"
+                type="text"
                 value={ product.count }
+                onChange={ (e) => addAndRemoveQtd(e, 'geral', product.id) }
               />
               <button
                 data-testid={ `customer_products__button-card-add-item-${product.id}` }
                 type="button"
-                onClick={ () => addAndRemoveQtd('+', product.id) }
+                onClick={ (e) => addAndRemoveQtd(e, '+', product.id) }
 
               >
                 +
@@ -107,7 +122,7 @@ function Product() {
         ))
       )}
 
-    </>
+    </div>
   );
 }
 
