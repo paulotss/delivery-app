@@ -10,6 +10,10 @@ function Product() {
 
   const getDatafromLocalstorage = () => {
     const user = JSON.parse(localStorage.getItem('user'));
+    // const cart = JSON.parse(localStorage.getItem('carrinho'));
+    // console.log(cart);
+    // setProducts(cart);
+
     setName(user.name);
   };
 
@@ -64,12 +68,26 @@ function Product() {
       }
       // console.log(error.response.status);
     }
+    getDatafromLocalstorage();
+  };
+
+  const setLocalStorage = () => {
+    localStorage.setItem('carrinho', JSON.stringify(productsCart));
   };
 
   useEffect(() => {
     getProducts();
-    getDatafromLocalstorage();
   }, []);
+
+  useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem('carrinho'));
+    if (products.length === 0) {
+      return null;
+    }
+    console.log(cart);
+
+    setLocalStorage();
+  }, [productsCart]);
   return (
     <div>
       <Navbar name={ name } />

@@ -1,20 +1,27 @@
 import PropTypes from 'prop-types';
+// import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 function TotalCart({ productsCart }) {
+  // const setLocalStorage = () => {
+  //   localStorage.setItem('carrinho', JSON.stringify(productsCart));
+  // };
+  // useEffect(() => {
+  //   setLocalStorage();
+  // }, [productsCart]);
   const history = useHistory();
   return (
     <button
+      data-testid="customer_products__button-cart"
       type="button"
       disabled={ productsCart.length === 0 }
       onClick={ () => history.push('/customer/checkout') }
     >
-      <span data-testid="customer_products__button-cart">Ver Carrinho </span>
-      <span>R$ </span>
+      <span>Ver Carrinho </span>
       <span data-testid="customer_products__checkout-bottom-value">
-        {productsCart
+        {`R$ ${productsCart
           .reduce((ant, att) => ant + (att.count * att.price), 0)
-          .toFixed(2).toString().replace('.', ',')}
+          .toFixed(2).toString().replace('.', ',')}`}
       </span>
     </button>
   );
