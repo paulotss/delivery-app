@@ -1,9 +1,11 @@
 import React from 'react';
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
 import Provider from './Context/Provider';
 import Login from './pages/Login';
 
 import './App.css';
+import Register from './pages/Register';
+import Product from './pages/Products';
 
 export function ValidationRoute({ children }) {
   const history = useHistory();
@@ -12,20 +14,20 @@ export function ValidationRoute({ children }) {
   history.push('/login');
 }
 
-function RedirectLogin() {
-  const history = useHistory();
-  return history.push('/login');
-}
+// function RedirectLogin() {
+//   const history = useHistory();
+//   history.push('/login');
+// }
 
 function App() {
   return (
     <Provider>
       <Switch>
         <Route path="/login" component={ Login } />
-        <Route path="/" component={ RedirectLogin() } />
-        {/* <Route path="/register" component={ <Register /> } />
-        <Route path="/transactions" component={ <Transactions /> } />
-        <Route path="/" component={ <Home /> } /> */}
+        <Route path="/register" component={ Register } />
+        <Route path="/customer/products" component={ Product } />
+        <Route exact path="/"><Redirect to="/login" /></Route>
+        {/* <Route path="/" component={ <Home /> } /> */}
       </Switch>
     </Provider>
   );

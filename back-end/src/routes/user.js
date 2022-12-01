@@ -8,4 +8,10 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => new UserController(service, req, res, next).findAll());
 
+router.post('/', (req, res, next) => 
+new UserController(service, req, res, next).findByLoginCredentials());
+
+router.post('/register', (req, res, next) => 
+new UserController(service, req, res, next).create());
+
 module.exports = router;
