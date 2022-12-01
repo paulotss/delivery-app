@@ -1,3 +1,9 @@
+// const aw = require("../../../assets/images/becks_600ml.jpg");
+
+// const { generateToken } = require('../auth/JWT');
+
+// const be = require('../../../assets/images/brahma_600ml.jpg');
+
 class ProductService {
   constructor(model) {
     this.model = model;

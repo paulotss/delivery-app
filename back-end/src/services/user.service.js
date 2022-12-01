@@ -29,15 +29,14 @@ class UserService {
     async findByLoginCredentials(password, email) {
       const valUser = validateUser(password);
 
-      const { dataValues } = await this.model.findOne({ where: {
+      const result = await this.model.findOne({ where: {
       password: valUser,
       email,
       } });
-      delete dataValues.password;
-
-      if (!dataValues) throw new CustomError('Not found', 404);
-      const token = generateToken({ email: dataValues.email });
-      return { token, ...dataValues };
+      if (!result) throw new CustomError('Not found', 404);
+      delete result.dataValues.password;
+      const token = generateToken({ email: result.dataValues.email });
+      return { token, ...result.dataValues };
     }
 
     async findById(id) {
