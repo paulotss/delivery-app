@@ -30,9 +30,7 @@ function Checkout() {
 
       return a;
     });
-    const auxorder = aux.filter((el) => el.count);
-    setCart(auxorder);
-    localStorage.setItem('carrinho', JSON.stringify(auxorder));
+    setCart(aux.filter((el) => el.count));
   };
 
   const getDataFromDb = () => {
@@ -132,7 +130,7 @@ function Checkout() {
           <span
             data-testid="customer_checkout__element-order-total-price"
           >
-            {`${cart
+            {`R$ ${cart
               .reduce((ant, att) => ant + (att.count * att.price), 0)
               .toFixed(2).toString().replace('.', ',')}`}
           </span>
