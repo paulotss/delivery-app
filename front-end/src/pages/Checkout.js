@@ -9,7 +9,10 @@ function Checkout() {
   const [cart, setCart] = useState([]);
   // const [name, setName] = useState([]);
   const [seller, setSeller] = useState([]);
-  const [idSeller, setIdSeller] = useState(0);
+  const [sellerId, setSellerId] = useState(0);
+
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [deliveryNumber, setDeliveryNumber] = useState('');
 
   const findSeller = async () => {
     try {
@@ -27,12 +30,27 @@ function Checkout() {
     // const ok = 200;
     // const notFound = 404;
     try {
-      const result = await axios.post('http://localhost:3001/sales/', cart);
+      const { token } = JSON.parse(localStorage.getItem('user'));
+      console.log(token);
+      const totalPrice = cart
+        .reduce((ant, att) => ant + (att.count * att.price), 0)
+        .toFixed(2);
+
+      const result = await axios.post(
+        'http://localhost:3001/sales/',
+        { sellerId, totalPrice, deliveryAddress, deliveryNumber, products: cart },
+        {
+          headers: {
+            authorization: token,
+          },
+        },
+      );
+      console.log(result);
       // if (cart) {
       //   if () {}
       //   history.push('customer/orders/<id>');
       // }
-      history.push('customer/orders/<id>');
+      history.push(`customer/orders/${result.data.id}`);
       return result;
     } catch (error) {
       console.log(error);
@@ -68,7 +86,7 @@ function Checkout() {
 
   return (
     <div>
-      <p>{ idSeller }</p>
+      <p>{ sellerId }</p>
       <h1>Finalizar Pedido</h1>
       <table>
         <thead>
@@ -168,7 +186,7 @@ function Checkout() {
           <select
             id="vendedor"
             data-testid="customer_checkout__select-seller"
-            onChange={ (e) => setIdSeller(e.target.value) }
+            onChange={ (e) => setSellerId(e.target.value) }
           >
             <option hidden>Selecione</option>
             {
@@ -186,6 +204,8 @@ function Checkout() {
             data-testid="customer_checkout__input-address"
             id="address"
             type="text"
+            value={ deliveryAddress }
+            onChange={ (e) => setDeliveryAddress(e.target.value) }
           />
         </label>
         <label htmlFor="number">
@@ -194,6 +214,8 @@ function Checkout() {
             data-testid="customer_checkout__input-address-number"
             id="number"
             type="text"
+            value={ deliveryNumber }
+            onChange={ (e) => setDeliveryNumber(e.target.value) }
           />
         </label>
 

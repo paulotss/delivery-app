@@ -1,3 +1,5 @@
+const { SaleProduct } = require('../database/models');
+
 class SalesService {
   constructor(model) {
     this.model = model;
@@ -13,11 +15,28 @@ class SalesService {
     return result;
   }
 
-  async create({ userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status ="pendente", products }) {
-    console.log(userId, sellerId, totalPrice, deliveryAddress, deliveryNumber);
-    const result = await this.model.create({ userId, sellerId, totalPrice, deliveryAddress,deliveryNumber, status, salesDate:new Date() });
-    console.log(result)
-    return result;
+  async create({ sellerId, totalPrice, deliveryAddress, 
+       deliveryNumber, status = 'Pendente', 
+       products }, 
+       userId) {
+    const { dataValues } = await this.model.create({ userId, 
+      sellerId, 
+      totalPrice, 
+      deliveryAddress, 
+      deliveryNumber, 
+      status, 
+      saleDate: new Date() });
+
+   const auxProducts = products.map((item) => {
+const saleId = dataValues.id;
+const productId = item.id;
+const quantity = item.count;
+return { saleId, productId, quantity };
+});
+await SaleProduct.bulkCreate(auxProducts);
+
+    // console.log(result)
+    return dataValues;
   }
 
   async deleteById(id) {

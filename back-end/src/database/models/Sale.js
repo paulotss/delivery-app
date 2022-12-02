@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       totalPrice: DataTypes.DECIMAL(9, 2),
       deliveryAddress: DataTypes.STRING(100),
       deliveryNumber: DataTypes.STRING(50),
-      salesDate: DataTypes.DATE,
+      saleDate: DataTypes.DATE,
       status: DataTypes.STRING(50),
     },
     {

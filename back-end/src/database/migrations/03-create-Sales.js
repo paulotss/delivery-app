@@ -19,7 +19,7 @@ module.exports = {
         },
       },
       sellerId: {
-        field: "saller_id",
+        field: "seller_id",
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
@@ -42,8 +42,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(50),
       },
-      salesDate: {
-        field: "sales_date",
+      saleDate: {
+        field: "sale_date",
         allowNull: false,
         type: Sequelize.DATE,
       },

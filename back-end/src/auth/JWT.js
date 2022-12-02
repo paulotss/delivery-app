@@ -13,7 +13,7 @@ const JWT_SECRET = fs.readFileSync(join(__dirname, '../../jwt.evaluation.key'));
 const generateToken = (payload) => JWT.sign(payload, JWT_SECRET, jwtConfig);
 
 const authTokenValidation = (token) => {
-    if (token) {
+    if (!token) {
         throw new CustomError('Token not found', 401);
     }
 

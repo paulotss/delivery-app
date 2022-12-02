@@ -14,7 +14,6 @@ new UserController(service, req, res, next).findByLoginCredentials());
 router.get('/seller', (req, res, next) => 
 new UserController(service, req, res, next).findByRole());
 
-
 router.post('/register', (req, res, next) => 
 new UserController(service, req, res, next).create());
 

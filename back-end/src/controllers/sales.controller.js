@@ -17,7 +17,8 @@ class ProductController {
 
     async create() {
         try {
-            const response = await this.service.create(this.req.body);
+            const { userId } = this.req;
+            const response = await this.service.create(this.req.body, userId);
             this.res.status(201).json(response);
         } catch (error) {
             this.next(error);

@@ -46,7 +46,6 @@ class UserController {
 
     async findByRole() {
         try {
-            const { password, email } = this.req.body;
             const response = await this.service.findByRole();
             this.res.status(200).json(response);
         } catch (error) {
