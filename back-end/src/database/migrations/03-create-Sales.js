@@ -18,7 +18,7 @@ module.exports = {
           key: "id",
         },
       },
-      sallerId: {
+      sellerId: {
         field: "saller_id",
         allowNull: false,
         type: Sequelize.INTEGER,

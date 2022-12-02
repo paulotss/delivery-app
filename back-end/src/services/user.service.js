@@ -39,6 +39,11 @@ class UserService {
       return { token, ...result.dataValues };
     }
 
+    async findByRole() {
+        const result = await this.model.findAll({ where: { role: 'seller' }, attributes: { exclude: ['password'] } });
+        return result;
+    }
+
     async findById(id) {
         const result = await this.model.findByPk(id, {
             attributes: { exclude: ['password'] },

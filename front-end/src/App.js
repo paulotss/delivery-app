@@ -28,7 +28,7 @@ function App() {
         <Route path="/register" component={ Register } />
         <Route path="/customer/products" component={ Product } />
         <Route path="/customer/checkout" component={ Checkout } />
-
+        {/* <Route path="/customer/orders/:id" component={ Checkout } /> */}
         <Route exact path="/"><Redirect to="/login" /></Route>
         {/* <Route path="/" component={ <Home /> } /> */}
       </Switch>

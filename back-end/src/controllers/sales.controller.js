@@ -1,4 +1,4 @@
-class UserController {
+class ProductController {
     constructor(service, req, res, next) {
         this.req = req;
         this.res = res;
@@ -34,26 +34,6 @@ class UserController {
         }
     }
 
-    async findByLoginCredentials() {
-        try {
-            const { password, email } = this.req.body;
-            const response = await this.service.findByLoginCredentials(password, email);
-            this.res.status(200).json(response);
-        } catch (error) {
-            this.next(error);
-        }
-    }
-
-    async findByRole() {
-        try {
-            const { password, email } = this.req.body;
-            const response = await this.service.findByRole();
-            this.res.status(200).json(response);
-        } catch (error) {
-            this.next(error);
-        }
-    }
-
     async deleteById() {
         try {
             const { id } = this.req.params;
@@ -65,4 +45,4 @@ class UserController {
     }
 }
 
-module.exports = UserController;
+module.exports = ProductController;

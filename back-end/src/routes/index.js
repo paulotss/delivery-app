@@ -7,9 +7,15 @@ const userRoutes = require('./user');
 
 const productRoutes = require('./product');
 
-router.use('/user', userRoutes);
+const saleRoutes = require('./sale');
+
+
+router.use('/user', userellerRoutes);
 
 router.use('/products', productRoutes);
+
+router.use('/sales', saleRoutes);
+
 
 router.use('/images', express.static(join(__dirname, '..', 'images/')));
 
