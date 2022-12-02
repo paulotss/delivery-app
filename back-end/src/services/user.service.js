@@ -1,5 +1,7 @@
 const validateUser = require('../utils/ValidateUser');
 
+const { generateToken } = require('../auth/JWT');
+
 const CustomError = require('../error/CustomError'); 
   
 class UserService {
@@ -14,13 +16,14 @@ class UserService {
         return result;
     }
 
-    async create({ email, name, password, role = null }) {
+    async create({ email, name, password, role = 'customer' }) {
         const user = await this.model.findOne({ where: { email } });
         const codePass = validateUser(password);
         if (user) throw new CustomError('Usuário já existe', 409);
         const { dataValues } = await this.model.create({ email, name, password: codePass, role });
         delete dataValues.password;
-        return dataValues;
+        const token = generateToken({ email: dataValues.email });
+        return { ...dataValues, token };
     }
 
     async findByLoginCredentials(password, email) {
@@ -31,7 +34,9 @@ class UserService {
       email,
       } });
       if (!result) throw new CustomError('Not found', 404);
-      return result;
+      delete result.dataValues.password;
+      const token = generateToken({ email: result.dataValues.email });
+      return { token, ...result.dataValues };
     }
 
     async findById(id) {

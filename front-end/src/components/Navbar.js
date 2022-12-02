@@ -1,32 +1,49 @@
-function Navbar() {
+import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+function Navbar({ name }) {
+  const history = useHistory();
+  const makeLogout = () => {
+    localStorage.clear();
+    history.push('/login');
+  };
   return (
     <nav>
-      <a
+      <button
+        type="button"
         href="/products"
         data-testid="customer_products__element-navbar-link-products"
       >
         Produtos
-      </a>
-      <a
+      </button>
+      <button
+        type="button"
         href="/orders"
         data-testid="customer_products__element-navbar-link-orders"
       >
         Meus Pedidos
-      </a>
-      <a
+      </button>
+      <button
+        type="button"
         href="/userFullName"
         data-testid="customer_products__element-navbar-user-full-name"
       >
-        Name
-      </a>
-      <a
+        {name}
+      </button>
+      <button
+        type="button"
+        onClick={ makeLogout }
         href="/logout"
         data-testid="customer_products__element-navbar-link-logout"
       >
         Sair
-      </a>
+      </button>
     </nav>
   );
 }
+
+Navbar.propTypes = {
+  name: PropTypes.string.isRequired,
+};
 
 export default Navbar;
