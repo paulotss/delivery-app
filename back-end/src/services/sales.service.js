@@ -12,27 +12,29 @@ class SalesService {
 
   async findById(id) {
     const result = await this.model.findOne({
-			where: { id },
-			// attributes: ['id', 'title', 'content', 'published'], 
-			include: [
-			{ model: User, as: 'idUser', attributes: ["name"]},
-			{ model: User, as: 'idSeller', attributes: ["name"]},
-			{ model: Product, as: 'products', through: { attributes: ["quantity"] }, attributes: ["name", "price"] },
+      where: { id },
+      include: [
+      { model: User, as: 'idUser', attributes: ['name'] },
+      { model: User, as: 'idSeller', attributes: ['name'] },
+      { model: Product,
+        as: 'products',
+        through: { attributes: ['quantity'] },
+        attributes: ['name', 'price'] },
+      ],
+   });
+    return result;
+  }
 
-			// { model: User, as: 'users' },
-			// { model: Product, as: 'products', through: { attributes: [] } }
-
-		],	
-		});
-		// console.log(result);
+  async findByUserId(userId) {
+    const result = await this.model.findAll({
+    where: { userId },
+  });
     return result;
   }
 
   async create({ sellerId, totalPrice, deliveryAddress, 
-       deliveryNumber, status = 'Pendente', 
-       products }, 
-       userId) {
-				console.log(userId);
+    deliveryNumber, status = 'Pendente', 
+    products }, userId) {
     const { dataValues } = await this.model.create({ userId, 
       sellerId, 
       totalPrice, 
@@ -41,13 +43,13 @@ class SalesService {
       status, 
       saleDate: new Date() });
 
-   const auxProducts = products.map((item) => {
-const saleId = dataValues.id;
-const productId = item.id;
-const quantity = item.count;
-return { saleId, productId, quantity };
-});
-await SaleProduct.bulkCreate(auxProducts);
+    const auxProducts = products.map((item) => {
+    const saleId = dataValues.id;
+    const productId = item.id;
+    const quantity = item.count;
+    return { saleId, productId, quantity };
+    });
+    await SaleProduct.bulkCreate(auxProducts);
 
     // console.log(result)
     return dataValues;

@@ -13,6 +13,13 @@ const dataTestsIds = {
     itemSubTotal: 'customer_order_details__element-order-table-sub-total-',
     totalPrice: 'customer_order_details__element-order-total-price',
   },
+  meusPedidos: {
+    id: 'customer_orders__element-order-id-',
+    status: 'customer_orders__element-delivery-status-',
+    date: 'customer_orders__element-order-date-',
+    price: 'customer_orders__element-card-price-',
+
+  },
 };
 
 export default dataTestsIds;

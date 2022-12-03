@@ -35,6 +35,17 @@ class ProductController {
         }
     }
 
+    async findByUserId() {
+      try {
+        const { userId } = this.req;
+        // console.log(userId);
+        const response = await this.service.findByUserId(+userId);
+        this.res.status(200).json(response);
+      } catch (error) {
+        this.next(error);
+      }
+    }
+
     async deleteById() {
         try {
             const { id } = this.req.params;

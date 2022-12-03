@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import dataTestsIds from '../utils/dataTestIds';
+import Navbar from '../components/Navbar';
 
 const ok = 200;
 
@@ -15,7 +16,7 @@ function DetalhesPedido() {
       const sale = params.pathname.split('/').pop();
       setSaleId(params.pathname.split('/').pop());
 
-      const result = await axios.get(`http://localhost:3001/sales/${sale}`);
+      const result = await axios.get(`http://localhost:3001/sales/bysaleId/${sale}`);
       // result
       if (result.status === ok) {
         console.log(result.data.saleDate);
@@ -38,6 +39,7 @@ function DetalhesPedido() {
 
   return (
     <div>
+      <Navbar />
       <h1>Detalhes do Pedido</h1>
 
       {Object.keys(dataSale).length > 0 && (
@@ -93,7 +95,7 @@ function DetalhesPedido() {
               <td
                 data-testid={ dataTestsIds.detalhesPedido.itemName + i }
               >
-                {/* {item.name} */}
+                {item.name}
 
               </td>
 
