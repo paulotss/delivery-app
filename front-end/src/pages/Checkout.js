@@ -50,7 +50,7 @@ function Checkout() {
       //   if () {}
       //   history.push('customer/orders/<id>');
       // }
-      history.push(`customer/orders/${result.data.id}`);
+      history.push(`/customer/orders/${result.data.id}`);
       return result;
     } catch (error) {
       console.log(error);

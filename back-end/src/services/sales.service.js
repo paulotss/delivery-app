@@ -1,4 +1,4 @@
-const { SaleProduct } = require('../database/models');
+const { SaleProduct, User, Product } = require('../database/models');
 
 class SalesService {
   constructor(model) {
@@ -11,7 +11,20 @@ class SalesService {
   }
 
   async findById(id) {
-    const result = await this.model.findByPk(id);
+    const result = await this.model.findOne({
+			where: { id },
+			// attributes: ['id', 'title', 'content', 'published'], 
+			include: [
+			{ model: User, as: 'idUser', attributes: ["name"]},
+			{ model: User, as: 'idSeller', attributes: ["name"]},
+			{ model: Product, as: 'products', through: { attributes: ["quantity"] }, attributes: ["name", "price"] },
+
+			// { model: User, as: 'users' },
+			// { model: Product, as: 'products', through: { attributes: [] } }
+
+		],	
+		});
+		// console.log(result);
     return result;
   }
 
@@ -19,6 +32,7 @@ class SalesService {
        deliveryNumber, status = 'Pendente', 
        products }, 
        userId) {
+				console.log(userId);
     const { dataValues } = await this.model.create({ userId, 
       sellerId, 
       totalPrice, 

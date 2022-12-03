@@ -10,7 +10,7 @@ const validateToken = require('../middlewares/validateToken');
 const service = new SaleService(Sale);
 const router = express.Router();
 
-// router.get('/', (req, res, next) => new SaleController(service, req, res, next).findAll());
+router.get('/:id', (req, res, next) => new SaleController(service, req, res, next).findById());
 
 // router.post('/', (req, res, next) => 
 // new SaleController(service, req, res, next).findByLoginCredentials());

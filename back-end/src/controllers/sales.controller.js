@@ -28,7 +28,7 @@ class ProductController {
     async findById() {
         try {
             const { id } = this.req.params;
-            const response = await this.service.findById(id);
+            const response = await this.service.findById(+id);
             this.res.status(200).json(response);
         } catch (error) {
             this.next(error);
