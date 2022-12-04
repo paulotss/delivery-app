@@ -40,14 +40,15 @@ class SalesService {
     return result;
   }
 
-	async updateStatusById(id,status) {
-		const sale = await this.model.findOne({
-      where: { id }});
+  async updateStatusById(id, status) {
+    const sale = await this.model.findOne({
+      where: { id } });
     if (!sale) throw new CustomError('Sale não existe', 404);
     const result = await this.model.update(
-    {status},
-    {where: {id},
-    });
+    { status },
+    { where: { id },
+    },
+    );
     return result;
   }
 
