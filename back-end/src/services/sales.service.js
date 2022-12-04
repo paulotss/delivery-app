@@ -1,4 +1,5 @@
 const { SaleProduct, User, Product } = require('../database/models');
+const CustomError = require('../error/CustomError');
 
 class SalesService {
   constructor(model) {
@@ -29,6 +30,24 @@ class SalesService {
     const result = await this.model.findAll({
     where: { userId },
   });
+    return result;
+  }
+
+  async findBySellerId(id) {
+    const result = await this.model.findAll({
+    where: { sellerId: id },
+  });
+    return result;
+  }
+
+	async updateStatusById(id,status) {
+		const sale = await this.model.findOne({
+      where: { id }});
+    if (!sale) throw new CustomError('Sale não existe', 404);
+    const result = await this.model.update(
+    {status},
+    {where: {id},
+    });
     return result;
   }
 

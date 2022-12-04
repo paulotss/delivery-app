@@ -13,11 +13,14 @@ const router = express.Router();
 router.get('/byuser', validateToken, (req, res, next) => 
 new SaleController(service, req, res, next).findByUserId());
 
+router.get('/byseller', validateToken, (req, res, next) => 
+new SaleController(service, req, res, next).findBySellerId());
+
 router.get('/bysaleId/:id', (req, res, next) => 
 new SaleController(service, req, res, next).findById());
 
-// router.post('/', (req, res, next) => 
-// new SaleController(service, req, res, next).findByLoginCredentials());
+router.patch('/:id', validateToken, (req, res, next) => 
+new SaleController(service, req, res, next).updateStatusById());
 
 // router.get('/seller', (req, res, next) => 
 // new SaleController(service, req, res, next).findByRole());

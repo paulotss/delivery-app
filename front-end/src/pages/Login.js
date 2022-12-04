@@ -23,7 +23,12 @@ function Login() {
 
         localStorage.setItem('user', JSON.stringify(result.data));
 
-        history.push('/customer/products');
+        if (result.data.role === 'seller') {
+          console.log(result.data.role);
+          history.push('seller/orders');
+        } else {
+          history.push('/customer/products');
+        }
       }
     } catch (error) {
       if (error.response.status === notFound) {
@@ -38,7 +43,12 @@ function Login() {
       console.log(JSON.parse(localStorage.getItem('user')));
       const user = JSON.parse(localStorage.getItem('user'));
       if (user) {
-        history.push('customer/products');
+        if (user.role === 'customer') {
+          history.push('customer/products');
+        }
+        if (user.role === 'seller') {
+          history.push('seller/orders');
+        }
       }
     } catch (error) {
       history.push('customer/products');

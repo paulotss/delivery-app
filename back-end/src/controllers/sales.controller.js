@@ -25,6 +25,8 @@ class ProductController {
         }
     }
 
+		
+
     async findById() {
         try {
             const { id } = this.req.params;
@@ -35,11 +37,36 @@ class ProductController {
         }
     }
 
+		async updateStatusById() {
+			try {
+          const { status } = this.req.body;
+					const { id } = this.req.params;
+					console.log(status,id);
+					
+					const response = await this.service.updateStatusById(+id,status);
+					this.res.status(200).json({message:"Status Atualizado"});
+			} catch (error) {
+					this.next(error);
+			}
+	}
+
+
     async findByUserId() {
       try {
         const { userId } = this.req;
         // console.log(userId);
         const response = await this.service.findByUserId(+userId);
+        this.res.status(200).json(response);
+      } catch (error) {
+        this.next(error);
+      }
+    }
+
+    async findBySellerId() {
+      try {
+        const { userId } = this.req;
+        // console.log(userId);
+        const response = await this.service.findBySellerId(+userId);
         this.res.status(200).json(response);
       } catch (error) {
         this.next(error);
