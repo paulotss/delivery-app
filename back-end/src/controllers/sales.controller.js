@@ -1,4 +1,4 @@
-class UserController {
+class ProductController {
     constructor(service, req, res, next) {
         this.req = req;
         this.res = res;
@@ -17,7 +17,8 @@ class UserController {
 
     async create() {
         try {
-            const response = await this.service.create(this.req.body);
+            const { userId } = this.req;
+            const response = await this.service.create(this.req.body, userId);
             this.res.status(201).json(response);
         } catch (error) {
             this.next(error);
@@ -27,30 +28,22 @@ class UserController {
     async findById() {
         try {
             const { id } = this.req.params;
-            const response = await this.service.findById(id);
+            const response = await this.service.findById(+id);
             this.res.status(200).json(response);
         } catch (error) {
             this.next(error);
         }
     }
 
-    async findByLoginCredentials() {
-        try {
-            const { password, email } = this.req.body;
-            const response = await this.service.findByLoginCredentials(password, email);
-            this.res.status(200).json(response);
-        } catch (error) {
-            this.next(error);
-        }
-    }
-
-    async findByRole() {
-        try {
-            const response = await this.service.findByRole();
-            this.res.status(200).json(response);
-        } catch (error) {
-            this.next(error);
-        }
+    async findByUserId() {
+      try {
+        const { userId } = this.req;
+        // console.log(userId);
+        const response = await this.service.findByUserId(+userId);
+        this.res.status(200).json(response);
+      } catch (error) {
+        this.next(error);
+      }
     }
 
     async deleteById() {
@@ -64,4 +57,4 @@ class UserController {
     }
 }
 
-module.exports = UserController;
+module.exports = ProductController;

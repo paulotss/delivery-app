@@ -4,11 +4,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
       userId: DataTypes.INTEGER,
-      sallerId: DataTypes.INTEGER,
+      sellerId: DataTypes.INTEGER,
       totalPrice: DataTypes.DECIMAL(9, 2),
       deliveryAddress: DataTypes.STRING(100),
       deliveryNumber: DataTypes.STRING(50),
-      salesDate: DataTypes.DATE,
+      saleDate: DataTypes.DATE,
       status: DataTypes.STRING(50),
     },
     {
@@ -21,7 +21,9 @@ module.exports = (sequelize, DataTypes) => {
   Sale.associate = (models) => {
     Sale.belongsTo(models.User, { foreignKey: "user_id", as: "idUser" });
 
-    Sale.belongsTo(models.User, { foreignKey: "saller_id", as: "idSaller" });
+    Sale.belongsTo(models.User, { foreignKey: "seller_id", as: "idSeller" });
+
+
   };
 
   return Sale;

@@ -33,10 +33,26 @@ function Login() {
     }
   };
 
+  const getDataFromLS = () => {
+    try {
+      console.log(JSON.parse(localStorage.getItem('user')));
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        history.push('customer/products');
+      }
+    } catch (error) {
+      history.push('customer/products');
+    }
+  };
+
   React.useEffect(() => {
     if (emailValidate(email) && passwordValidate(password)) return setIsDisabled(false);
     setIsDisabled(true);
   }, [email, password]);
+
+  React.useEffect(() => {
+    getDataFromLS();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();

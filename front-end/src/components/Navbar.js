@@ -1,18 +1,30 @@
 import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
-function Navbar({ name }) {
+function Navbar() {
   const history = useHistory();
+  const [name, setName] = useState('');
   const makeLogout = () => {
     localStorage.clear();
     history.push('/login');
   };
+
+  const getDatafromLS = () => {
+    const { name: n } = JSON.parse(localStorage.getItem('user'));
+    setName(n);
+  };
+
+  useEffect(() => {
+    getDatafromLS();
+  }, []);
   return (
     <nav>
       <button
         type="button"
         href="/products"
         data-testid="customer_products__element-navbar-link-products"
+        onClick={ () => history.push('/customer/products') }
+
       >
         Produtos
       </button>
@@ -20,6 +32,8 @@ function Navbar({ name }) {
         type="button"
         href="/orders"
         data-testid="customer_products__element-navbar-link-orders"
+        onClick={ () => history.push('/customer/orders') }
+
       >
         Meus Pedidos
       </button>
@@ -41,9 +55,5 @@ function Navbar({ name }) {
     </nav>
   );
 }
-
-Navbar.propTypes = {
-  name: PropTypes.string.isRequired,
-};
 
 export default Navbar;

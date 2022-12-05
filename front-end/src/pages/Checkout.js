@@ -1,23 +1,60 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+
+const ok = 200;
 
 function Checkout() {
   const history = useHistory();
   const [cart, setCart] = useState([]);
-  const [name, setName] = useState([]);
+  // const [name, setName] = useState([]);
+  const [seller, setSeller] = useState([]);
+  const [sellerId, setSellerId] = useState(0);
+
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [deliveryNumber, setDeliveryNumber] = useState('');
+
+  const findSeller = async () => {
+    try {
+      const result = await axios.get('http://localhost:3001/user/seller');
+      console.log(result);
+      if (result.status === ok) {
+        setSeller(result.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const finishChecout = async () => {
     // const ok = 200;
     // const notFound = 404;
     try {
-      // const result = await axios.post('http://localhost:3001/products/',{});
-      // console.log(result.data[1].url_image);
-      // if (result.status === ok) {
+      const { token } = JSON.parse(localStorage.getItem('user'));
+      console.log(token);
+      const totalPrice = cart
+        .reduce((ant, att) => ant + (att.count * att.price), 0)
+        .toFixed(2);
+
+      const result = await axios.post(
+        'http://localhost:3001/sales/',
+        { sellerId, totalPrice, deliveryAddress, deliveryNumber, products: cart },
+        {
+          headers: {
+            authorization: token,
+          },
+        },
+      );
+      console.log(result);
+      // if (cart) {
+      //   if () {}
+      //   history.push('customer/orders/<id>');
       // }
+      history.push(`/customer/orders/${result.data.id}`);
+      return result;
     } catch (error) {
       console.log(error);
     }
-    history.push('customer/orders/<id>');
   };
 
   const removeItem = (id) => {
@@ -27,7 +64,6 @@ function Checkout() {
       if (el.id === id && el.count !== 0) {
         a.count -= 1;
       }
-
       return a;
     });
     const auxorder = aux.filter((el) => el.count);
@@ -37,17 +73,20 @@ function Checkout() {
 
   const getDataFromDb = () => {
     const lsCart = JSON.parse(localStorage.getItem('carrinho'));
-    const lsUser = JSON.parse(localStorage.getItem('user'));
+    // const lsUser = JSON.parse(localStorage.getItem('user'));
 
-    setName(lsUser.name);
+    // setName(lsUser.name);
     setCart(lsCart);
   };
+
   useEffect(() => {
+    findSeller();
     getDataFromDb();
   }, []);
 
   return (
     <div>
+      <p>{ sellerId }</p>
       <h1>Finalizar Pedido</h1>
       <table>
         <thead>
@@ -147,8 +186,16 @@ function Checkout() {
           <select
             id="vendedor"
             data-testid="customer_checkout__select-seller"
+            onChange={ (e) => setSellerId(e.target.value) }
           >
-            <option>{name}</option>
+            <option hidden>Selecione</option>
+            {
+              seller ? (seller.map((el) => (
+                <option key={ el.id } value={ el.id }>{el.name}</option>
+              ))
+              )
+                : null
+            }
           </select>
         </label>
         <label htmlFor="address">
@@ -157,6 +204,8 @@ function Checkout() {
             data-testid="customer_checkout__input-address"
             id="address"
             type="text"
+            value={ deliveryAddress }
+            onChange={ (e) => setDeliveryAddress(e.target.value) }
           />
         </label>
         <label htmlFor="number">
@@ -165,6 +214,8 @@ function Checkout() {
             data-testid="customer_checkout__input-address-number"
             id="number"
             type="text"
+            value={ deliveryNumber }
+            onChange={ (e) => setDeliveryNumber(e.target.value) }
           />
         </label>
 

@@ -7,6 +7,8 @@ import './App.css';
 import Register from './pages/Register';
 import Product from './pages/Products';
 import Checkout from './pages/Checkout';
+import DetalhesPedido from './pages/DetalhesPedido';
+import MeusPedidos from './pages/MeusPedidos';
 
 export function ValidationRoute({ children }) {
   const history = useHistory();
@@ -28,7 +30,8 @@ function App() {
         <Route path="/register" component={ Register } />
         <Route path="/customer/products" component={ Product } />
         <Route path="/customer/checkout" component={ Checkout } />
-
+        <Route exact path="/customer/orders/" component={ MeusPedidos } />
+        <Route path="/customer/orders/:id" component={ DetalhesPedido } />
         <Route exact path="/"><Redirect to="/login" /></Route>
         {/* <Route path="/" component={ <Home /> } /> */}
       </Switch>

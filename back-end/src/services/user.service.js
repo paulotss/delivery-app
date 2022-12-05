@@ -22,7 +22,7 @@ class UserService {
         if (user) throw new CustomError('Usuário já existe', 409);
         const { dataValues } = await this.model.create({ email, name, password: codePass, role });
         delete dataValues.password;
-        const token = generateToken({ email: dataValues.email });
+        const token = generateToken({ id: dataValues.id });
         return { ...dataValues, token };
     }
 
@@ -35,8 +35,14 @@ class UserService {
       } });
       if (!result) throw new CustomError('Not found', 404);
       delete result.dataValues.password;
-      const token = generateToken({ email: result.dataValues.email });
+      const token = generateToken({ id: result.dataValues.id });
       return { token, ...result.dataValues };
+    }
+
+    async findByRole() {
+        const result = await this.model.findAll({ where: { role: 'seller' }, 
+          attributes: { exclude: ['password'] } });
+        return result;
     }
 
     async findById(id) {
