@@ -13,6 +13,8 @@ import MeusPedidos from './pages/MeusPedidos';
 import SellerPedidos from './pages/SellerPedidos';
 import DetalhesPedidoSeller from './pages/DetalhesPedidoSeller';
 
+import PagAdm from './pages/PagAdm';
+
 export function ValidationRoute({ children }) {
   const history = useHistory();
   const { token } = localStorage.getItem('token');
@@ -38,6 +40,9 @@ function App() {
 
         <Route exact path="/seller/orders/" component={ SellerPedidos } />
         <Route path="/seller/orders/:id" component={ DetalhesPedidoSeller } />
+
+        <Route path="/admin/manage" component={ PagAdm } />
+
         <Route exact path="/"><Redirect to="/login" /></Route>
         {/* <Route path="/" component={ <Home /> } /> */}
       </Switch>

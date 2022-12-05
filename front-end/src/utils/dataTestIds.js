@@ -44,6 +44,22 @@ const dataTestsIds = {
     date: `${SELLER}_orders__element-order-date-`,
     price: `${SELLER}_orders__element-card-price-`,
   },
+  admPag: {
+    invalidRegister: 'admin_manage__element-invalid-register',
+    navLinkOrder: 'customer_products__element-navbar-link-orders',
+    navUser: 'customer_products__element-navbar-link-orders',
+    navLogout: 'customer_products__element-navbar-link-logout',
+    name: 'admin_manage__input-name',
+    email: 'admin_manage__input-email',
+    password: 'admin_manage__input-password',
+    role: 'admin_manage__select-role',
+    register: 'admin_manage__button-register',
+    numberUser: 'admin_manage__element-user-table-item-number-',
+    nameUser: 'admin_manage__element-user-table-name-',
+    emailUser: 'admin_manage__element-user-table-email-',
+    roleUser: 'admin_manage__element-user-table-role-',
+    removeUser: 'admin_manage__element-user-table-remove-',
+  },
 };
 
 export default dataTestsIds;
