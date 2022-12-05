@@ -1,5 +1,5 @@
+const { Op } = require('sequelize');
 const validateUser = require('../utils/ValidateUser');
-const { Op } = require("sequelize");
 
 const { generateToken } = require('../auth/JWT');
 
@@ -12,7 +12,7 @@ class UserService {
 
     async findAll() {
         const result = await this.model.findAll({
-						where: {role: {[Op.ne]: "administrator"}},
+            where: { role: { [Op.ne]: 'administrator' } },
             attributes: { exclude: ['password'] },
         });
         return result;
@@ -57,11 +57,9 @@ class UserService {
     }
 
     async deleteById(id) {
-			const user = await this.model.findOne({where:{id}})
-			console.log(user.dataValues);
-			if(!user) throw new CustomError("usuário não existe",404)
+      const user = await this.model.findOne({ where: { id } });
+      if (!user) throw new CustomError('usuário não existe', 404);
       await this.model.destroy({ where: { id } });
-			console.log("teste");
     }
 }
 

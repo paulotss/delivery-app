@@ -17,6 +17,18 @@ function DetalhesPedido() {
 
   const [dataUsers, setDataUsers] = useState({});
 
+  const getUsers = async () => {
+    try {
+      const result = await axios.get('http://localhost:3001/user/');
+      // result
+      if (result.status === ok) {
+        setDataUsers(result.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const validateButton = () => {
     let aux = true;
     if (emailValidate(email)
@@ -64,18 +76,6 @@ function DetalhesPedido() {
         },
       );
       getUsers();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getUsers = async () => {
-    try {
-      const result = await axios.get('http://localhost:3001/user/');
-      // result
-      if (result.status === ok) {
-        setDataUsers(result.data);
-      }
     } catch (error) {
       console.log(error);
     }

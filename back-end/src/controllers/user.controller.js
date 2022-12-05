@@ -54,7 +54,6 @@ class UserController {
     }
 
     async deleteById() {
-			console.log("sw");
         try {
             const { id } = this.req.params;
             const response = await this.service.deleteById(id);
