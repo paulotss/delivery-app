@@ -5,6 +5,7 @@ import dataTestsIds from '../utils/dataTestIds';
 import Navbar from '../components/Navbar';
 
 const ok = 200;
+const EMTRANSITO = 'Em Trânsito';
 
 function DetalhesPedido() {
   const params = useLocation();
@@ -17,6 +18,7 @@ function DetalhesPedido() {
       const sale = params.pathname.split('/').pop();
       setSaleId(params.pathname.split('/').pop());
 
+      console.log(status, token);
       await axios.patch(
         `http://localhost:3001/sales/${sale}`,
         { status },
@@ -30,6 +32,7 @@ function DetalhesPedido() {
       console.log(error);
     }
   };
+
   const getDataSale = async () => {
     try {
       const sale = params.pathname.split('/').pop();
@@ -65,29 +68,41 @@ function DetalhesPedido() {
 
         <div>
           <span>Pedido </span>
-          <span data-testid={ dataTestsIds.detalhesPedido.id }>
+          <span data-testid={ dataTestsIds.sellerDetalPed.id }>
             {saleId}
           </span>
-          <span data-testid={ dataTestsIds.detalhesPedido.name }>
+          <span data-testid={ dataTestsIds.sellerDetalPed.name }>
             {dataSale?.idSeller?.name}
           </span>
-          <span data-testid={ dataTestsIds.detalhesPedido.date }>
+          <span data-testid={ dataTestsIds.sellerDetalPed.date }>
             {dataSale?.date}
           </span>
-          <span data-testid={ dataTestsIds.detalhesPedido.status }>
+          <span data-testid={ dataTestsIds.sellerDetalPed.status }>
             {dataSale.status}
           </span>
 
           <button
-            data-testid={ dataTestsIds.detalhesPedido.check }
+            data-testid={ dataTestsIds.sellerDetalPed.preparando }
             type="button"
-            disabled={ dataSale.status !== 'Em Trânsito' }
+            disabled={ dataSale.status !== 'Pendente' }
             onClick={ () => {
-              changeStatus('Entregue');
-              setDataSale({ ...dataSale, status: 'Entregue' });
+              changeStatus('Preparando');
+              setDataSale({ ...dataSale, status: 'Preparando' });
             } }
           >
-            Marcar como Entregue
+            Preparando Pedido
+          </button>
+
+          <button
+            data-testid={ dataTestsIds.sellerDetalPed.saiuEntrega }
+            type="button"
+            disabled={ ['Pendente', EMTRANSITO, 'Entregue'].includes(dataSale.status) }
+            onClick={ () => {
+              changeStatus(EMTRANSITO);
+              setDataSale({ ...dataSale, status: EMTRANSITO });
+            } }
+          >
+            Saiu para Entrega
           </button>
 
         </div>
@@ -105,38 +120,39 @@ function DetalhesPedido() {
         </thead>
 
         <tbody>
+          {console.log(dataSale)}
           {Object.keys(dataSale).length > 0 && dataSale.products.map((item, i) => (
             <tr key={ item.id }>
               <td
-                data-testid={ dataTestsIds.detalhesPedido.itemId + i }
+                data-testid={ dataTestsIds.sellerDetalPed.itemId + i }
               >
                 {i + 1}
 
               </td>
 
               <td
-                data-testid={ dataTestsIds.detalhesPedido.itemName + i }
+                data-testid={ dataTestsIds.sellerDetalPed.itemName + i }
               >
                 {item.name}
 
               </td>
 
               <td
-                data-testid={ dataTestsIds.detalhesPedido.itemQtd + i }
+                data-testid={ dataTestsIds.sellerDetalPed.itemQtd + i }
               >
                 {item.SaleProduct.quantity}
 
               </td>
 
               <td
-                data-testid={ dataTestsIds.detalhesPedido.itemPrice + i }
+                data-testid={ dataTestsIds.sellerDetalPed.itemPrice + i }
               >
                 {item.price}
 
               </td>
 
               <td
-                data-testid={ dataTestsIds.detalhesPedido.itemSubTotal + i }
+                data-testid={ dataTestsIds.sellerDetalPed.itemSubTotal + i }
               >
                 {item.SaleProduct.quantity * item.price}
 
@@ -155,7 +171,7 @@ function DetalhesPedido() {
             Total
             {' '}
             <span
-              data-testid={ dataTestsIds.detalhesPedido.totalPrice }
+              data-testid={ dataTestsIds.sellerDetalPed.totalPrice }
             >
               {(dataSale.totalPrice).replace('.', ',')}
             </span>

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 function Navbar() {
   const history = useHistory();
   const [name, setName] = useState('');
+  const [roleUser, setRoleUser] = useState('customer');
   const makeLogout = () => {
     localStorage.clear();
     history.push('/login');
@@ -14,8 +15,21 @@ function Navbar() {
     setName(n);
   };
 
+  const getRoleUser = () => {
+    const { role } = JSON.parse(localStorage.getItem('user'));
+    // console.log(pathname.split('/').includes('seller'));
+    if (role === 'seller') {
+      return setRoleUser('seller');
+    }
+    if (role === 'administrator') {
+      return setRoleUser('administrator');
+    }
+    setRoleUser('customer');
+  };
+
   useEffect(() => {
     getDatafromLS();
+    getRoleUser();
   }, []);
   return (
     <nav>
@@ -23,7 +37,7 @@ function Navbar() {
         type="button"
         href="/products"
         data-testid="customer_products__element-navbar-link-products"
-        onClick={ () => history.push('/customer/products') }
+        onClick={ () => history.push(`/${roleUser}/products`) }
 
       >
         Produtos
@@ -32,7 +46,7 @@ function Navbar() {
         type="button"
         href="/orders"
         data-testid="customer_products__element-navbar-link-orders"
-        onClick={ () => history.push('/customer/orders') }
+        onClick={ () => history.push(`/${roleUser}/orders`) }
 
       >
         Meus Pedidos

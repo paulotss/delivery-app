@@ -62,8 +62,10 @@ function Checkout() {
     aux.map((el) => {
       const a = el;
       if (el.id === id && el.count !== 0) {
-        a.count -= 1;
+        // a.count -= 1;
+        delete a.count;
       }
+
       return a;
     });
     const auxorder = aux.filter((el) => el.count);
