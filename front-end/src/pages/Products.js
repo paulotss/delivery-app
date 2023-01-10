@@ -94,52 +94,57 @@ function Product() {
       {/* <CardProducts products={ products } /> */}
 
       <TotalCart productsCart={ productsCart } />
-
-      {products.length !== 0 && (
-        products.map((product) => (
-          <div key={ product.id }>
-            <p
-              data-testid={ `customer_products__element-card-price-${product.id}` }
-            >
-              {`R$ ${product.price.replaceAll('.', ',')}`}
-            </p>
-            <img
-              data-testid={ `customer_products__img-card-bg-image-${product.id}` }
-              src={ product.url_image }
-              alt={ product.name }
-            />
-            <div>
-              <button
-                data-testid={ `customer_products__button-card-rm-item-${product.id}` }
-                type="button"
-                onClick={ (e) => addAndRemoveQtd(e, '-', product.id) }
+      <div className="flex flex-wrap justify-center">
+        {products.length !== 0 && (
+          products.map((product) => (
+            <div className="p-2 m-2 border-2 border-gray-300 w-64 h-72 flex flex-col items-center" key={ product.id }>
+              <p
+                className="text-2xl font-bold"
+                data-testid={ `customer_products__element-card-price-${product.id}` }
               >
-                -
-              </button>
-              <input
-                data-testid={ `customer_products__input-card-quantity-${product.id}` }
-                type="text"
-                value={ product.count }
-                onChange={ (e) => addAndRemoveQtd(e, 'geral', product.id) }
+                {`R$ ${product.price.replaceAll('.', ',')}`}
+              </p>
+              <img
+                className="h-[60%] text-center"
+                data-testid={ `customer_products__img-card-bg-image-${product.id}` }
+                src={ product.url_image }
+                alt={ product.name }
               />
-              <button
-                data-testid={ `customer_products__button-card-add-item-${product.id}` }
-                type="button"
-                onClick={ (e) => addAndRemoveQtd(e, '+', product.id) }
-
+              <p
+                data-testid={ `customer_products__element-card-title-${product.id}` }
               >
-                +
-              </button>
-            </div>
-            <p
-              data-testid={ `customer_products__element-card-title-${product.id}` }
-            >
-              {product.name}
-            </p>
-          </div>
-        ))
-      )}
+                {product.name}
+              </p>
+              <div className="mt-2 mb-2 bg-red-100 flex justify-center">
+                <button
+                  className="w-10 bg-red-600 text-white p-2 rounded-lg"
+                  data-testid={ `customer_products__button-card-rm-item-${product.id}` }
+                  type="button"
+                  onClick={ (e) => addAndRemoveQtd(e, '-', product.id) }
+                >
+                  -
+                </button>
+                <input
+                  className="w-8 text-center hover:outline-0 focus:outline-0"
+                  data-testid={ `customer_products__input-card-quantity-${product.id}` }
+                  type="text"
+                  value={ product.count }
+                  onChange={ (e) => addAndRemoveQtd(e, 'geral', product.id) }
+                />
+                <button
+                  className="w-10 bg-red-600 text-white p-2 rounded-lg"
+                  data-testid={ `customer_products__button-card-add-item-${product.id}` }
+                  type="button"
+                  onClick={ (e) => addAndRemoveQtd(e, '+', product.id) }
 
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }

@@ -32,40 +32,48 @@ function Navbar() {
     getRoleUser();
   }, []);
   return (
-    <nav>
-      <button
-        type="button"
-        href="/products"
-        data-testid="customer_products__element-navbar-link-products"
-        onClick={ () => history.push(`/${roleUser}/products`) }
+    <nav className="bg-red-600 text-white flex justify-between">
+      <div>
+        <button
+          className="p-4 bg-red-500 text-black font-bold"
+          type="button"
+          href="/products"
+          data-testid="customer_products__element-navbar-link-products"
+          onClick={ () => history.push(`/${roleUser}/products`) }
 
-      >
-        Produtos
-      </button>
-      <button
-        type="button"
-        href="/orders"
-        data-testid="customer_products__element-navbar-link-orders"
-        onClick={ () => history.push(`/${roleUser}/orders`) }
+        >
+          Produtos
+        </button>
+        <button
+          className="bg-red-600 p-4 font-bold"
+          type="button"
+          href="/orders"
+          data-testid="customer_products__element-navbar-link-orders"
+          onClick={ () => history.push(`/${roleUser}/orders`) }
 
-      >
-        Meus Pedidos
-      </button>
-      <button
-        type="button"
-        href="/userFullName"
-        data-testid="customer_products__element-navbar-user-full-name"
-      >
-        {name}
-      </button>
-      <button
-        type="button"
-        onClick={ makeLogout }
-        href="/logout"
-        data-testid="customer_products__element-navbar-link-logout"
-      >
-        Sair
-      </button>
+        >
+          Meus Pedidos
+        </button>
+      </div>
+      <div>
+        <button
+          className="bg-yellow-400 p-4 text-black font-bold"
+          type="button"
+          href="/userFullName"
+          data-testid="customer_products__element-navbar-user-full-name"
+        >
+          {name}
+        </button>
+        <button
+          className="bg-green-500 p-4 font-bold"
+          type="button"
+          onClick={ makeLogout }
+          href="/logout"
+          data-testid="customer_products__element-navbar-link-logout"
+        >
+          Sair
+        </button>
+      </div>
     </nav>
   );
 }

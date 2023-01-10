@@ -1,7 +1,10 @@
+/* eslint-disable react/jsx-max-depth */
 import * as React from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { emailValidate, passwordValidate } from '../utils/validationLogin';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function Login() {
   const history = useHistory();
@@ -72,50 +75,63 @@ function Login() {
   };
 
   return (
-    <div>
-      <form onSubmit={ handleSubmit }>
-        <label htmlFor="email">
-          Email:
-          <input
-            data-testid="common_login__input-email"
-            type="email"
-            value={ email }
-            onChange={ (e) => setEmail(e.target.value) }
-            id="email"
-          />
-        </label>
-        <label htmlFor="password">
-          Password:
-          <input
-            data-testid="common_login__input-password"
-            type="password"
-            value={ password }
-            onChange={ (e) => setPassword(e.target.value) }
-            id="password"
-          />
-        </label>
-        <button
-          type="submit"
-          data-testid="common_login__button-login"
-          disabled={ isDisabled }
-        >
-          Login
-        </button>
+    <>
+      <Header />
+      <div className="w-full h-screen flex flex-col justify-center items-center bg-cover bg-white bg-opacity-50 bg-[url('https://get.pxhere.com/photo/food-natural-foods-whole-food-Food-group-superfood-cuisine-local-food-vegetable-ingredient-dish-vegan-nutrition-produce-vegetarian-food-delicacy-still-life-meal-recipe-herb-still-life-photography-1621684.jpg')]">
+        <h1 className="text-red-600 text-6xl">TryFood</h1>
+        <div className="w-96 flex bg-red-600 p-8 text-white mt-3">
+          <form className="flex flex-col" onSubmit={ handleSubmit }>
+            <label className="mb-2" htmlFor="email">
+              Email:
+              <br />
+              <input
+                className="p-1 w-full text-black"
+                data-testid="common_login__input-email"
+                type="email"
+                value={ email }
+                onChange={ (e) => setEmail(e.target.value) }
+                id="email"
+              />
+            </label>
+            <label className="mb-2" htmlFor="password">
+              Password:
+              {' '}
+              <input
+                className="p-1 w-full text-black"
+                data-testid="common_login__input-password"
+                type="password"
+                value={ password }
+                onChange={ (e) => setPassword(e.target.value) }
+                id="password"
+              />
+            </label>
+            <button
+              className="mb-2 bg-white text-black"
+              type="submit"
+              data-testid="common_login__button-login"
+              disabled={ isDisabled }
+            >
+              Login
+            </button>
 
-        <button
-          type="button"
-          data-testid="common_login__button-register"
-          onClick={ () => history.push('/register') }
-        >
-          Ainda não tenho Conta
-        </button>
+            <button
+              className="mb-2 bg-white text-black"
+              type="button"
+              data-testid="common_login__button-register"
+              onClick={ () => history.push('/register') }
+            >
+              Ainda não tenho Conta
+            </button>
 
-        {isDataCorect ? (
-          <p data-testid="common_login__element-invalid-email">
-            Usuário não Encontrado
-          </p>) : null}
-      </form>
-    </div>
+            {isDataCorect ? (
+              <p data-testid="common_login__element-invalid-email">
+                Usuário não Encontrado
+              </p>) : null}
+          </form>
+        </div>
+      </div>
+      <Footer />
+    </>
   );
 }
 

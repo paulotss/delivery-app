@@ -12,6 +12,7 @@ function TotalCart({ productsCart }) {
   const history = useHistory();
   return (
     <button
+      className="bg-red-600 text-white p-2 rounded-lg fixed bottom-5 right-5"
       data-testid="customer_products__button-cart"
       type="button"
       disabled={ productsCart.length === 0 }
