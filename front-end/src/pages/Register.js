@@ -1,9 +1,11 @@
+/* eslint-disable max-len */
 /* eslint-disable react/jsx-max-depth */
 import * as React from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { emailValidate, passwordValidate, nameValidate } from '../utils/validationLogin';
 import Header from '../components/Header';
+import '../styles/pages/register.css';
 
 function Register() {
   const history = useHistory();
@@ -50,7 +52,7 @@ function Register() {
   return (
     <>
       <Header />
-      <div className="w-full h-screen flex flex-col justify-center items-center bg-cover bg-white bg-opacity-50 bg-[url('https://get.pxhere.com/photo/food-natural-foods-whole-food-Food-group-superfood-cuisine-local-food-vegetable-ingredient-dish-vegan-nutrition-produce-vegetarian-food-delicacy-still-life-meal-recipe-herb-still-life-photography-1621684.jpg')]">
+      <div className="w-full h-screen flex flex-col justify-center items-center bg-cover bg-white bg-opacity-50">
         <h1 className="text-red-600 text-6xl">Cadastre-se</h1>
         <div className="w-96 flex bg-red-600 p-8 text-white mt-3">
           <form className="flex flex-col" onSubmit={ handleSubmit }>
