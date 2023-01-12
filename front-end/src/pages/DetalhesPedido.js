@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable react/jsx-max-depth */
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -57,114 +59,126 @@ function DetalhesPedido() {
   }, []);
 
   return (
-    <div>
+    <>
       <Navbar />
-      <h1>Detalhes do Pedido</h1>
+      <div className="container mx-auto">
+        <h1 className="mt-5 text-lg">Detalhes do Pedido</h1>
 
-      {Object.keys(dataSale).length > 0 && (
+        {Object.keys(dataSale).length > 0 && (
 
-        <div>
-          <span>Pedido </span>
-          <span data-testid={ dataTestsIds.detalhesPedido.id }>
-            {saleId}
-          </span>
-          <span data-testid={ dataTestsIds.detalhesPedido.name }>
-            {dataSale?.idSeller?.name}
-          </span>
-          <span data-testid={ dataTestsIds.detalhesPedido.date }>
-            {dataSale?.date}
-          </span>
-          <span data-testid={ dataTestsIds.detalhesPedido.status }>
-            {dataSale.status}
-          </span>
-
-          <button
-            data-testid={ dataTestsIds.detalhesPedido.check }
-            type="button"
-            disabled={ dataSale.status !== 'Em Trânsito' }
-            onClick={ () => {
-              changeStatus('Entregue');
-              setDataSale({ ...dataSale, status: 'Entregue' });
-            } }
-          >
-            Marcar como Entregue
-          </button>
-
-        </div>
-      )}
-      <table>
-        <thead>
-          <tr>
-            <td>Item</td>
-            <td>Descrição</td>
-            <td>Quantidade</td>
-            <td>Valor Unitário</td>
-            <td>Sub-total</td>
-          </tr>
-
-        </thead>
-
-        <tbody>
-          {Object.keys(dataSale).length > 0 && dataSale.products.map((item, i) => (
-            <tr key={ item.id }>
-              <td
-                data-testid={ dataTestsIds.detalhesPedido.itemId + i }
-              >
-                {i + 1}
-
-              </td>
-
-              <td
-                data-testid={ dataTestsIds.detalhesPedido.itemName + i }
-              >
-                {item.name}
-
-              </td>
-
-              <td
-                data-testid={ dataTestsIds.detalhesPedido.itemQtd + i }
-              >
-                {item.SaleProduct.quantity}
-
-              </td>
-
-              <td
-                data-testid={ dataTestsIds.detalhesPedido.itemPrice + i }
-              >
-                {item.price}
-
-              </td>
-
-              <td
-                data-testid={ dataTestsIds.detalhesPedido.itemSubTotal + i }
-              >
-                {item.SaleProduct.quantity * item.price}
-
-              </td>
-
-            </tr>
-
-          ))}
-
-        </tbody>
-      </table>
-
-      {Object.keys(dataSale).length > 0 && (
-        <div>
-          <p>
-            Total
-            {' '}
-            <span
-              data-testid={ dataTestsIds.detalhesPedido.totalPrice }
-            >
-              {(dataSale.totalPrice).replace('.', ',')}
+          <div className="flex justify-between text-lg bg-gray-100 mb-5">
+            <div className="font-bold p-2">
+              <span>Pedido </span>
+              <span data-testid={ dataTestsIds.detalhesPedido.id }>
+                {saleId}
+              </span>
+            </div>
+            <span className="p-2" data-testid={ dataTestsIds.detalhesPedido.name }>
+              {dataSale?.idSeller?.name}
+            </span>
+            <span className="font-bold p-2" data-testid={ dataTestsIds.detalhesPedido.date }>
+              {dataSale?.date}
+            </span>
+            <span className="font-bold p-2 bg-red-100 rounded" data-testid={ dataTestsIds.detalhesPedido.status }>
+              {dataSale.status}
             </span>
 
-          </p>
-        </div>
-      )}
+            <button
+              className="font-bold p-2 bg-red-300 rounded"
+              data-testid={ dataTestsIds.detalhesPedido.check }
+              type="button"
+              disabled={ dataSale.status !== 'Em Trânsito' }
+              onClick={ () => {
+                changeStatus('Entregue');
+                setDataSale({ ...dataSale, status: 'Entregue' });
+              } }
+            >
+              Marcar como Entregue
+            </button>
 
-    </div>
+          </div>
+        )}
+        <div>
+          <table className="w-full">
+            <thead>
+              <tr className="border-4 border-white text-sm">
+                <td>Item</td>
+                <td>Descrição</td>
+                <td>Quantidade</td>
+                <td>Valor Unitário</td>
+                <td>Sub-total</td>
+              </tr>
+
+            </thead>
+
+            <tbody>
+              {Object.keys(dataSale).length > 0 && dataSale.products.map((item, i) => (
+                <tr className="border-4 border-white" key={ item.id }>
+                  <td
+                    className="bg-red-600 text-white text-center p-2"
+                    data-testid={ dataTestsIds.detalhesPedido.itemId + i }
+                  >
+                    {i + 1}
+
+                  </td>
+
+                  <td
+                    className="bg-red-100 pl-2"
+                    data-testid={ dataTestsIds.detalhesPedido.itemName + i }
+                  >
+                    {item.name}
+
+                  </td>
+
+                  <td
+                    className="bg-red-800 text-white text-center"
+                    data-testid={ dataTestsIds.detalhesPedido.itemQtd + i }
+                  >
+                    {item.SaleProduct.quantity}
+
+                  </td>
+
+                  <td
+                    className="bg-yellow-400 text-center"
+                    data-testid={ dataTestsIds.detalhesPedido.itemPrice + i }
+                  >
+                    {item.price}
+
+                  </td>
+
+                  <td
+                    className="bg-red-400 text-center"
+                    data-testid={ dataTestsIds.detalhesPedido.itemSubTotal + i }
+                  >
+                    {item.SaleProduct.quantity * item.price}
+
+                  </td>
+
+                </tr>
+
+              ))}
+
+            </tbody>
+          </table>
+        </div>
+
+        {Object.keys(dataSale).length > 0 && (
+          <div className="ml-[75%] p-3 bg-red-600 text-white font-bold text-4xl text-center">
+            <p>
+              Total: R$
+              {' '}
+              <span
+                data-testid={ dataTestsIds.detalhesPedido.totalPrice }
+              >
+                {(dataSale.totalPrice).replace('.', ',')}
+              </span>
+
+            </p>
+          </div>
+        )}
+
+      </div>
+    </>
   );
 }
 

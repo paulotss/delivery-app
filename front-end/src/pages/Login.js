@@ -78,7 +78,7 @@ function Login() {
     <>
       <Header />
       <div className="w-full h-screen flex flex-col justify-center items-center bg-cover bg-white bg-opacity-50 bg-[url('https://get.pxhere.com/photo/food-natural-foods-whole-food-Food-group-superfood-cuisine-local-food-vegetable-ingredient-dish-vegan-nutrition-produce-vegetarian-food-delicacy-still-life-meal-recipe-herb-still-life-photography-1621684.jpg')]">
-        <h1 className="text-red-600 text-6xl">TryFood</h1>
+        <h1 className="text-red-600 text-6xl">Delivery Drinks</h1>
         <div className="w-96 flex bg-red-600 p-8 text-white mt-3">
           <form className="flex flex-col" onSubmit={ handleSubmit }>
             <label className="mb-2" htmlFor="email">
